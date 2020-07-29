@@ -6,7 +6,7 @@ Auther is a Go library to handle user authentication, i.e. registration, login, 
 
 ## Interface
 
-```
+```golang
 type Authenticator interface {
 	Signup(fullname, username, password string) (string, error)
 	Signin(username, password string) (string, error)
@@ -23,7 +23,7 @@ type User struct {
 
 ## Example
 
-```
+```golang
 import auther "github.com/tfdavids/auther"
 
 func main() {
