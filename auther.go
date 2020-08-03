@@ -3,6 +3,7 @@ package auther
 import (
 	"crypto/rand"
 	"crypto/sha1"
+	"crypto/subtle"
 	"database/sql"
 	"encoding/base64"
 	"fmt"
@@ -121,7 +122,8 @@ func (a *authenticator) Signin(username, password string) (string, error) {
 	}
 
 	h := hash([]byte(password), []byte(u.PasswordSalt))
-	if h != u.PasswordHash {
+	cmp := subtle.ConstantTimeCompare([]byte(h), []byte(u.PasswordHash))
+	if cmp == 0 {
 		return "", fmt.Errorf("invalid password for user %s", username)
 	}
 
